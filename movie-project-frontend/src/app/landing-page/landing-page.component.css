@@ -1,0 +1,54 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    background-color: #222;
+    padding: 10px;
+}
+
+.navbar a img {
+    height: 40px;
+}
+
+.menu img {
+    cursor: pointer;
+    height: 30px;
+    margin-left: 20px;
+}
+
+.dropdown-menu {
+    background-color: #333;
+    color: white;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 300px;
+    padding: 20px;
+}
+
+.menu-section {
+    margin-bottom: 20px;
+}
+
+.menu-section h4 {
+    cursor: pointer;
+    color: #ffcc00;
+    margin-bottom: 10px;
+}
+
+.menu-section ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.menu-section ul li {
+    margin: 5px 0;
+}
+
+.menu-section ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.menu-section ul li a:hover {
+    color: #ffcc00;
+}
