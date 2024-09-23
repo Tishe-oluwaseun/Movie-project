@@ -1,26 +1,30 @@
 package com.movie_project.movie_Base.Entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import java.util.List;
 
-@Entity
+@Entity(name = "watchlist")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Watchlist {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
-    @OneToOne
+    private Boolean hasWatchedMovie = false;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany
-    private List<Movie> movies;
+    @ManyToOne
+    @JoinColumn(name = "movie_id")
+    private Movie movies;
+
+
+
 }

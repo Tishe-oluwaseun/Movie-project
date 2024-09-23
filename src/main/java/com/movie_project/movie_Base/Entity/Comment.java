@@ -1,14 +1,10 @@
 package com.movie_project.movie_Base.Entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.Date;
 
 @Entity
 @Getter
@@ -17,14 +13,18 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Comment {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
+
     private String comment;
 
-    @OneToOne
+    @ManyToOne
     private User user;
 
     @ManyToOne
     private Movie movie;
 
-    private Integer date;
+    @Temporal(TemporalType.DATE)
+    private Date commentDate;
 }
