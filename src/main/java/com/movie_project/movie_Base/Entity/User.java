@@ -1,6 +1,7 @@
 package com.movie_project.movie_Base.Entity;
 
 import com.movie_project.movie_Base.Enum.Badge;
+import com.movie_project.movie_Base.Enum.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -37,14 +38,18 @@ import java.util.Set;
     @OneToMany(mappedBy = "user")
     private Set<Rating> reviews;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @Lob
     private String PFP;
 
 
-    public User(String name, String email, Badge badge) {
+    public User(String name, String email, Badge badge, Role role) {
         this.username = name;
         this.email = email;
         this.badge = badge;
+        this.role = role;
 
     }
 
