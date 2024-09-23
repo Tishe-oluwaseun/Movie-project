@@ -61,10 +61,7 @@ public class Movie {
     private List<Rating> ratings;
 
     @ManyToMany
-    @JoinTable(name = "movies_watchlists", joinColumns = @JoinColumn(name = "movie_id"),
-            inverseJoinColumns = @JoinColumn(name = "watchlist_id"))
     private List<Watchlist> watchlist;
-
 
 
 }
