@@ -1,7 +1,6 @@
 package com.movie_project.movie_Base.Entity;
 
-import com.movie_project.movie_Base.Enum.Actor;
-import com.movie_project.movie_Base.Enum.Director;
+
 import com.movie_project.movie_Base.Enum.GENRE;
 import com.movie_project.movie_Base.Enum.MovieState;
 import jakarta.persistence.*;
@@ -29,16 +28,12 @@ public class Movie {
     @ElementCollection
     private Set<GENRE> genre;
 
-    private Director director;
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
     private boolean isPopular;//checking if the movie is in the popular section
 
-    @Enumerated
-    @ElementCollection
-    private List<Actor> cast;
 
     @Lob
     private String Description;
