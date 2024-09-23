@@ -40,6 +40,7 @@ public class Movie {
     @ElementCollection
     private List<Actor> cast;
 
+    @Lob
     private String Description;
     private String posterUrl;
 
