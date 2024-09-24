@@ -43,7 +43,7 @@ public class Movie {
 
 
 
-    private String movieImage;
+    private String movieImages;
 
 
     @Enumerated(EnumType.STRING)
