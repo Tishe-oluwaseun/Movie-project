@@ -23,7 +23,6 @@ public class Movie {
     private Long id;
     private String title;
     private Integer releaseDate;
-    private Boolean upcoming;
 
     private String description;
 
