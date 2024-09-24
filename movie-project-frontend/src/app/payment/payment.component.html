@@ -1,1 +1,38 @@
-<p>payment works!</p>
+<div class="payment-container">
+    <h2>Payment</h2>
+    <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+      
+      <div class="input-container">
+        <label for="amount">Amount</label>
+        <input 
+          id="amount" 
+          formControlName="amount" 
+          type="number" 
+          placeholder="Enter amount" 
+          required
+        />
+        <div *ngIf="paymentForm.get('amount')?.invalid && paymentForm.get('amount')?.touched">
+          <small class="error">Please enter a valid amount</small>
+        </div>
+      </div>
+  
+      <div class="input-container">
+        <label for="password">Password</label>
+        <input 
+          id="password" 
+          formControlName="password" 
+          type="password" 
+          placeholder="Enter your password" 
+          required
+        />
+        <div *ngIf="paymentForm.get('password')?.invalid && paymentForm.get('password')?.touched">
+          <small class="error">Password is required</small>
+        </div>
+      </div>
+  
+      <button type="submit" [disabled]="paymentForm.invalid">Pay with Paystack</button>
+    </form>
+  
+    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+  </div>
+  

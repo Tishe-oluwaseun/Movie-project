@@ -3,6 +3,17 @@
         <div class="signup-container">
             <h1>Sign Up</h1>
             <form [formGroup]="signupForm" (ngSubmit)="signUp()">
+              <div class="input">
+                
+              </div>
+
+              <div class="input-container">
+                <img class="user" src="icons8-user-32.png" alt="user"> 
+                <input formControlName="user" type="text" placeholder="User Name" />
+            </div>
+            <div *ngIf="signupForm.get('user')?.invalid && signupForm.get('user')?.touched">
+                <small class="error">Please enter a valid user</small>
+            </div>
               <div class="input-container">
                 <img class="email" src="icons8-circled-envelope-32.png" alt="email">
                 <input formControlName="email" type="email" placeholder="Email" />

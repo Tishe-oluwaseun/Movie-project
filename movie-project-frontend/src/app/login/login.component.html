@@ -3,13 +3,13 @@
         <div class="login-container">
             <h1>Log In</h1>
             <form [formGroup]="loginForm" (ngSubmit)="login()">
-    
+
                 <div class="input-container">
-                    <img class="email" src="icons8-circled-envelope-32.png" alt="email"> 
-                    <input formControlName="email" type="email" placeholder="Email" />
+                    <img class="user" src="icons8-user-32.png" alt="user"> 
+                    <input formControlName="user" type="text" placeholder="User" />
                 </div>
-                <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
-                    <small class="error">Please enter a valid email</small>
+                <div *ngIf="loginForm.get('user')?.invalid && loginForm.get('user')?.touched">
+                    <small class="error">Please enter a valid user</small>
                 </div>
             
                 <div class="input-container">

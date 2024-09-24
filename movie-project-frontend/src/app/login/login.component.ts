@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from '../auth.service';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../auth.service'; // Import AuthService
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -14,42 +14,40 @@ import { AuthService } from '../auth.service'; // Import AuthService
 })
 export class LoginComponent {
   loginForm: FormGroup;
-  errorMessage: string = ''; 
+  errorMessage: string = '';
 
   constructor(
-    private auth: Auth, 
-    private router: Router, 
+    private router: Router,
     private fb: FormBuilder,
-    private authService: AuthService 
+    private authService: AuthService,
+    private snackBar: MatSnackBar,
   ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      user: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
+
   
-  loginWithGoogle() {
-    this.authService.signInWithGoogle();
+  login() {
+    const { user, password } = this.loginForm.value;
+    this.errorMessage = '';
+  
+    this.authService.login(user, password).subscribe({
+      next: (response) => {
+        console.log('Login successful', response);
+        this.router.navigate(['/T3movies']); 
+      },
+      error: (error) => {
+        console.error('Login failed', error);
+        this.snackBar.open('Login failed: ' + error.message, 'Close', { duration: 5000 });
+      }
+    });
   }
   
 
-  login() {
-    const { email, password } = this.loginForm.value;
-    this.errorMessage = ''; 
-
-    signInWithEmailAndPassword(this.auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-
-        
-        this.authService.setSession(); 
-
-        localStorage.setItem('userToken', JSON.stringify(user));
-        
-        this.router.navigate(['/photo-library']);
-      })
-      .catch((error) => {
-        this.errorMessage = error.message; 
-      });
+ 
+  loginWithGoogle() {
+    this.authService.signInWithGoogle();
   }
 }
