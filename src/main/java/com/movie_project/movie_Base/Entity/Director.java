@@ -1,30 +1,27 @@
 package com.movie_project.movie_Base.Entity;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Rating")
-public class Rating {
+public class Director {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-    @ManyToOne
-    @JoinColumn(name = "movie_id")
-    private Movie movie;
+    private String directorName;
 
-    private double rating;
+    private String email;
+
+    @OneToMany(mappedBy = "movie")
+    private Set<Movie> movie;
+
 
 }

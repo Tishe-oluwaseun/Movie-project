@@ -6,6 +6,8 @@ import com.movie_project.movie_Base.Enum.MovieState;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -22,42 +24,42 @@ public class Movie {
     private String title;
     private Integer releaseDate;
     private Boolean upcoming;
+
     private String description;
 
     @Enumerated
     @ElementCollection
-    private Set<GENRE> genre;
+    private Set<GENRE> genre = new HashSet<>();
 
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
-    private List<Comment> comments;
-
-    private boolean isPopular;//checking if the movie is in the popular section
+    private List<Comment> comments= new ArrayList<>();
 
 
-    @Lob
-    private String Description;
+
     private String posterUrl;
 
     private String videoUrl;
 
 
+
+    private String movieImage;
+
+
     @Enumerated(EnumType.STRING)
     @ElementCollection
-    private List<MovieState> movieState;
+    private List<MovieState> movieState =  new ArrayList<>();
+
+    @ManyToOne
+    private Director director;
 
 
-
-
-    private int duration; // in minutes
-    private double rating; // average rating
-    private int numRatings; // number of ratings
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Rating> ratings;
+    private List<Rating> ratings = new ArrayList<>();
 
     @ManyToMany
-    private List<Watchlist> watchlist;
+    private List<Watchlist> watchlist =  new ArrayList<>();
 
 
 }

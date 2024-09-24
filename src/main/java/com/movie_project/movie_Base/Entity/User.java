@@ -5,6 +5,7 @@ import com.movie_project.movie_Base.Enum.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name = "user")
@@ -33,16 +34,19 @@ import java.util.Set;
     private boolean isActiveUser = true;
 
     @OneToMany(mappedBy = "user")
-    private Set<Comment> comment ;
+    private Set<Comment> comment = new HashSet<>(); ;
 
     @OneToMany(mappedBy = "user")
-    private Set<Rating> reviews;
+    private Set<Rating> reviews = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    private Set<Movie> movies = new HashSet<>();
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
     @Lob
-    private String PFP;
+    private String Picture;
 
 
     public User(String name, String email, Badge badge, Role role) {
@@ -50,7 +54,6 @@ import java.util.Set;
         this.email = email;
         this.badge = badge;
         this.role = role;
-
     }
 
 

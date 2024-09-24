@@ -18,6 +18,7 @@ public class Pictures {
     @Lob
     private String url;
 
+
     public Pictures(String url) {
 
         this.url = url;
