@@ -20,7 +20,7 @@ public class UserController {
     private final UserServiceImpl userServiceImpl;
 
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity getUser(User user) {
         return ResponseEntity.ok(userService.getUserByEmail(user.getEmail()));
     }
