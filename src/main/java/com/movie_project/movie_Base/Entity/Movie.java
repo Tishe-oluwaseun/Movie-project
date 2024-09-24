@@ -23,6 +23,7 @@ public class Movie {
     private Long id;
     private String title;
     private Integer releaseDate;
+    //private Boolean upcoming;
     private Boolean upcoming;
 
     private String description;
@@ -32,10 +33,13 @@ public class Movie {
     private Set<GENRE> genre = new HashSet<>();
 
 
+
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
     private List<Comment> comments= new ArrayList<>();
 
 
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
+    private List<Actor> cast;
 
     private String posterUrl;
 
@@ -53,6 +57,9 @@ public class Movie {
     @ManyToOne
     private Director director;
 
+
+
+    private int duration; // in minutes
 
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
