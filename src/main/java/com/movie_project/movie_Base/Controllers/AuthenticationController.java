@@ -1,4 +1,4 @@
-package com.movie_project.movie_Base.controllers;
+package com.movie_project.movie_Base.Controllers;
 
 import com.movie_project.movie_Base.Entity.User;
 import com.movie_project.movie_Base.Services.AuthenticationService;
@@ -11,8 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class AuthenticationController {
     private final AuthenticationService authenticationService;

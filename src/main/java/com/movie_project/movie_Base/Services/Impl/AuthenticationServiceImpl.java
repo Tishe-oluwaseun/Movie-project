@@ -1,4 +1,4 @@
-package com.movie_project.movie_Base.Services.impl;
+package com.movie_project.movie_Base.Services.Impl;
 
 import com.movie_project.movie_Base.Entity.User;
 import com.movie_project.movie_Base.Repositories.UserRepository;
