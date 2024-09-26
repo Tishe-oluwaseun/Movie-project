@@ -1,4 +1,4 @@
-package com.movie_project.movie_Base.Services.impl;
+package com.movie_project.movie_Base.Services.Impl;
 
 import com.movie_project.movie_Base.Entity.Movie;
 import com.movie_project.movie_Base.Entity.Rating;
@@ -11,6 +11,8 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,16 +23,6 @@ public class RatingServiceImpl implements RatingService {
     private final UserRepository userRepository;
 
 
-
-
-//    @Autowired
-//    public RatingServiceImpl(Rating rating, RatingRepository ratingRepository, MovieRepository movieRepository, UserRepository userRepository) {
-//        this.ratingRepository = ratingRepository;
-//        this.movieRepository = movieRepository;
-//        this.userRepository = userRepository;
-//
-//    }
-
     @Override
     public Rating addRating(Long userId, Long movieId, double ratingValue) {
        Movie movie = movieRepository.findById(movieId).orElseThrow( () -> new EntityNotFoundException("Movie Not Found with id: " + movieId));
@@ -39,7 +31,8 @@ public class RatingServiceImpl implements RatingService {
        Rating rating = new Rating();
        rating.setUser(user);
        rating.setMovie(movie);
-       rating.setRating(ratingValue);
+       rating.setRatingValue(ratingValue);
+
        return ratingRepository.save(rating);
 
     }
@@ -48,18 +41,41 @@ public class RatingServiceImpl implements RatingService {
     public RatingRepository deleteRating(Long ratingId) {
         Rating rating = ratingRepository.getById(ratingId);
         ratingRepository.delete(rating);
-        ratingRepository.save(rating);
+
         return ratingRepository;
     }
 
     @Override
-    public Double getOverallRating(Long movieId) {
+    public Rating updateRating(Long userId, Long movieId, double ratingValue) {
+        Rating updated = ratingRepository.getbyUserIdandMovieId(userId, movieId);
+        updated.setRatingValue(ratingValue);
 
-        return 0.0;
+        return ratingRepository.save(updated);
     }
 
     @Override
-    public List<Rating> getAllRatingsByMovie(Movie movie) {
-        return ratingRepository.getAllbymovie(movie);
+    public Rating getUserRatingOfMovie(Long userId, Long movieId) {
+        return ratingRepository.getbyUserIdandMovieId(userId, movieId);
+    }
+
+    @Override
+    public Double getAverageMovieRating(Long movieId) {
+        ArrayList<Rating> movieRatings = (ArrayList<Rating>) getAllRatingsByMovie(movieId);
+        Double totalRating = 0.0;
+        int ratingCount = 0;
+        double averageRating = 0.0;
+
+        for (Rating rating : movieRatings) {
+            totalRating = totalRating + rating.getRatingValue();
+            ratingCount++;
+        }
+        averageRating = totalRating / ratingCount;
+        return averageRating;
+    }
+
+    @Override
+    public List<Rating> getAllRatingsByMovie( Long movieId) {
+
+        return ratingRepository.getAllbymovieId(movieId);
     }
 }
