@@ -20,7 +20,7 @@ public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private Long movieId;
+    private Long Id;
     private String title;
     private Integer releaseDate;
 

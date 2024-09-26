@@ -50,7 +50,10 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     public Rating updateRating(Long userId, Long movieId, double ratingValue) {
-        Rating updated = ratingRepository.getbyUserIdandMovieId(userId, movieId);
+        Movie movie = movieRepository.getById(movieId);
+        User user = userRepository.getById(userId);
+
+        Rating updated = ratingRepository.getByUserAndMovie(movie, user);
         updated.setRatingValue(ratingValue);
 
         return ratingRepository.save(updated);
@@ -58,7 +61,10 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     public Rating getUserRatingOfMovie(Long userId, Long movieId) {
-        return ratingRepository.getbyUserIdandMovieId(userId, movieId);
+
+        Movie movie = movieRepository.getById(movieId);
+        User user = userRepository.getById(userId);
+        return ratingRepository.getByUserAndMovie(movie, user);
     }
 
     @Override
@@ -78,7 +84,7 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     public List<Rating> findAllRatingsByMovie( Long movieId) {
-
-        return ratingRepository.getAllbymovieId(movieId);
+        Movie movie = movieRepository.getById(movieId);
+        return ratingRepository.findByMovie( movie);
     }
 }

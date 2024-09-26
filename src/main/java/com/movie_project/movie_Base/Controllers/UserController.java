@@ -32,10 +32,10 @@ public class UserController {
     public ResponseEntity getAllStaff(){
         return ResponseEntity.ok(userServiceImpl.findAllUsersByRole(Role.STAFF));
     }
-    @GetMapping("/{id}")
-    public ResponseEntity getUserById( @PathVariable Long id){
-        return ResponseEntity.ok(userService.getUserById(id));
-    }
+//    @GetMapping("/{id}")
+//    public ResponseEntity getUserById( @PathVariable Long id){
+//        return ResponseEntity.ok(userService.getUserById(id));
+//    }
     @GetMapping("/user")
     public ResponseEntity getAllUsers(){
         return ResponseEntity.ok(userServiceImpl.findAllUsersByRole(Role.USER));
