@@ -19,6 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private ModelMapper mapper;
 
 
 
@@ -51,33 +52,34 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
     @Override
-    public User updateUser(User user) {
-        log.info("updating user: {}", user.getId());
+    public UserDTO updateUser(User user) {
+        // Retrieve the existing user from the database
         User existingUser = userRepository.findById(user.getId()).orElse(null);
-        if (existingUser != null) {
-            existingUser.setEmail(user.getEmail());
-            existingUser.setRole(user.getRole());
-            existingUser.setPassword(user.getPassword());
-            existingUser.setUsername(user.getUsername());
-            saveUser(existingUser);
-            return user;
-        }else{
+        if (existingUser == null) {
+            log.info("User not found: {}", user.getId());
             return null;
         }
+        // Update the existing user with the new information
+        existingUser.setUsername(user.getUsername());
+        existingUser.setEmail(user.getEmail());
 
+
+        // Saves the updated user
+        User savedUser = userRepository.save(existingUser);
+
+        // Returns the updated user as a UserDTO
+        return mapper.map(savedUser, UserDTO.class);
     }
 
 
 
     public ArrayList<UserDTO> findAllUsersByRole(Role role){
         ArrayList<UserDTO> userList = new ArrayList<>();
-        ModelMapper mapper = new ModelMapper();
         for (User user: userRepository.findAllByRole(role)
         ) {
             userList.add(mapper.map(user, UserDTO.class));
-        }
-        return  userList;
-    }
+        }return  userList;}
+
 
     @Override
     public void deleteUser(Long id) {

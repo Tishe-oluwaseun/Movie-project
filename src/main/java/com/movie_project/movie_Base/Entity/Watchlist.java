@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 
-@Entity(name = "watchlist")
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor
@@ -18,11 +18,9 @@ public class Watchlist {
     private Boolean hasWatchedMovie = false;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "movie_id")
     private Movie movies;
 
 

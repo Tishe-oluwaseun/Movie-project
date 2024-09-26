@@ -1,13 +1,13 @@
 package com.movie_project.movie_Base.Services.Impl;
 
-import com.movie_project.movie_Base.Entity.Director;
+import com.movie_project.movie_Base.DTOs.MovieDTO;
 import com.movie_project.movie_Base.Entity.Movie;
-import com.movie_project.movie_Base.Enum.GENRE;
 import com.movie_project.movie_Base.Repositories.DirectorRepository;
 import com.movie_project.movie_Base.Repositories.MovieRepository;
 import com.movie_project.movie_Base.Services.MovieService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MovieServiceImpl implements MovieService {
     private final MovieRepository movieRepository;
+    private final ModelMapper modelMapper = new ModelMapper();
     private final DirectorRepository directorRepository;
 
     @Override
@@ -32,17 +33,18 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Movie addMovie(Movie movie) {
-
+    public MovieDTO addMovie(Movie movie) {
         List<Movie> existingMovie = movieRepository.findByTitle(movie.getTitle());
         if (existingMovie != null) {
             log.info("Movie already exists: {}", movie.getTitle());
-            return existingMovie.getFirst();
+            return modelMapper.map(existingMovie.getFirst(), MovieDTO.class);
         } else {
-            log.info("adding new movie: {}", movie.getTitle());
-            return saveMovie(movie);
+            if (movie.getDirector() != null) {
+                directorRepository.findById(movie.getDirector().getId()).ifPresent(movie::setDirector);
+            }
+            Movie savedMovie = movieRepository.save(movie);
+            return modelMapper.map(savedMovie, MovieDTO.class);
         }
-
     }
 
     @Override
@@ -52,20 +54,21 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Movie updateMovie(Movie movie) {
+    public Movie updateMovie(MovieDTO movie) {
         log.info("updating movie: {}", movie);
-        Movie existingMovie = getMovieById(movie.getId());
-        if (existingMovie != null) {
+        Movie existingMovie = movieRepository.findById(movie.getId()).orElse(null);
+        if (existingMovie == null) {
+            log.info("Movie not found: {}", movie.getId());
+            return null;
+        }
             existingMovie.setTitle(movie.getTitle());
             existingMovie.setReleaseDate(movie.getReleaseDate());
             existingMovie.setGenre(movie.getGenre());
             existingMovie.setDirector(movie.getDirector());
             existingMovie.setDescription(movie.getDescription());
             return saveMovie(existingMovie);
-        } else {
-            return null;
         }
-    }
+
 
     @Override
     public void deleteMovie(Long id) {
@@ -73,25 +76,15 @@ public class MovieServiceImpl implements MovieService {
         movieRepository.deleteById(id);
     }
 
-    @Override
-    public Movie addDirector(Movie movie,Director director) {
-        Director existingDirector = directorRepository.findByFirstNameAndLastName
-                (director.getDirectorName());
-        if (existingDirector == null) {
-            existingDirector = directorRepository.save(director);
-        }
-        movie.setDirector(existingDirector);
-        return saveMovie(movie);
-    }
+
 
     @Override
-    public List<Movie> searchMovieByName(String title) {
-        log.info("searching movies by title: {}", title);
-        return movieRepository.findByTitle(title);
+    public Movie getMovieByName(String title) {
+        List<Movie> movies = movieRepository.findByTitle(title);
+        if (movies.isEmpty()) {
+            return null;
+        }
+        return movies.getFirst();
     }
-    @Override
-    public List<Movie> searchMovieByGenre(GENRE genre) {
-        log.info("searching movies by genre: {}", genre);
-        return movieRepository.findByGenre(genre);
-    }
+
 }
