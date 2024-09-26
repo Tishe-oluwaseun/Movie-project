@@ -12,5 +12,5 @@ public interface RatingService {
     Rating updateRating(Long userId, Long movieId, double rating);
     Rating getUserRatingOfMovie(Long userId, Long movieId);
     Double getAverageMovieRating(Long movieId);
-    List<Rating> getAllRatingsByMovie( Long movieId);
+    List<Rating> findAllRatingsByMovie( Long movieId);
 }

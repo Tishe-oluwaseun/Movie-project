@@ -8,11 +8,12 @@ import lombok.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name = "user")
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "users")
     public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,13 +40,12 @@ import java.util.Set;
     @OneToMany(mappedBy = "user")
     private Set<Rating> reviews = new HashSet<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany
     private Set<Movie> movies = new HashSet<>();
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @Lob
     private String Picture;
 
 

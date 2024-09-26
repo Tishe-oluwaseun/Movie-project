@@ -7,30 +7,33 @@ import com.movie_project.movie_Base.Services.Impl.UserServiceImpl;
 import com.movie_project.movie_Base.Services.UserService;
 import lombok.AllArgsConstructor;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestController("/user")
-@CrossOrigin(origins = "http://localhost:50029")
+@CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor
+@Slf4j
 public class UserController {
 
     private final UserService userService;
     private final UserServiceImpl userServiceImpl;
 
 
-    @GetMapping
-    public ResponseEntity getUser(User user) {
+    @GetMapping("/")
+    public ResponseEntity getAllUser(User user) {
         return ResponseEntity.ok(userService.getUserByEmail(user.getEmail()));
     }
     @GetMapping("/staff")
     public ResponseEntity getAllStaff(){
         return ResponseEntity.ok(userServiceImpl.findAllUsersByRole(Role.STAFF));
     }
-    @GetMapping
-    public ResponseEntity getUserById(@RequestParam Long id){
+    @GetMapping("/{id}")
+    public ResponseEntity getUserById( @PathVariable Long id){
         return ResponseEntity.ok(userService.getUserById(id));
     }
     @GetMapping("/user")
@@ -53,6 +56,15 @@ public class UserController {
         System.out.println("user deleted");
         userService.deleteUser(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+    @PostMapping("/save")
+    public ResponseEntity saveUser(@RequestBody User users){
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveUser(users));
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity updateUser(@RequestBody User users){
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.updateUser(users));
     }
 
 

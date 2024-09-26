@@ -9,12 +9,14 @@ import com.movie_project.movie_Base.Repositories.UserRepository;
 import com.movie_project.movie_Base.Services.RatingService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class RatingServiceImpl implements RatingService {
@@ -32,8 +34,9 @@ public class RatingServiceImpl implements RatingService {
        rating.setUser(user);
        rating.setMovie(movie);
        rating.setRatingValue(ratingValue);
-
+    log.info("rating added");
        return ratingRepository.save(rating);
+
 
     }
 
@@ -60,7 +63,7 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     public Double getAverageMovieRating(Long movieId) {
-        ArrayList<Rating> movieRatings = (ArrayList<Rating>) getAllRatingsByMovie(movieId);
+        ArrayList<Rating> movieRatings = (ArrayList<Rating>) findAllRatingsByMovie(movieId);
         Double totalRating = 0.0;
         int ratingCount = 0;
         double averageRating = 0.0;
@@ -74,7 +77,7 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
-    public List<Rating> getAllRatingsByMovie( Long movieId) {
+    public List<Rating> findAllRatingsByMovie( Long movieId) {
 
         return ratingRepository.getAllbymovieId(movieId);
     }

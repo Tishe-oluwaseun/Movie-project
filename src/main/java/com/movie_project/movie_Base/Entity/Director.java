@@ -3,6 +3,7 @@ package com.movie_project.movie_Base.Entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -10,6 +11,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "directors")
 public class Director {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,8 +22,10 @@ public class Director {
 
     private String email;
 
-    @OneToMany(mappedBy = "movie")
-    private Set<Movie> movie;
+    @OneToMany(mappedBy = "director")
+    private Set<Movie> movie = new HashSet<>();
+
+    private String DPFP;
 
 
 }
