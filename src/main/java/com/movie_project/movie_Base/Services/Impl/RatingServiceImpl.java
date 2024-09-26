@@ -66,7 +66,7 @@ public class RatingServiceImpl implements RatingService {
         ArrayList<Rating> movieRatings = (ArrayList<Rating>) findAllRatingsByMovie(movieId);
         Double totalRating = 0.0;
         int ratingCount = 0;
-        double averageRating = 0.0;
+        double averageRating;
 
         for (Rating rating : movieRatings) {
             totalRating = totalRating + rating.getRatingValue();
