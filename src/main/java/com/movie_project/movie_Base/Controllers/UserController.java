@@ -14,17 +14,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-@RestController("/user")
 @CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor
 @Slf4j
+@RestController("/user")
 public class UserController {
 
     private final UserService userService;
     private final UserServiceImpl userServiceImpl;
 
 
-    @GetMapping("/")
+    @GetMapping("/allusers")
     public ResponseEntity getAllUser(User user) {
         return ResponseEntity.ok(userService.getUserByEmail(user.getEmail()));
     }

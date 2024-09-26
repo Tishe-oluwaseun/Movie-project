@@ -30,7 +30,6 @@ public class Movie {
     @ElementCollection
     private Set<GENRE> genre = new HashSet<>();
 
-
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
     private List<Comment> comments= new ArrayList<>();
 
@@ -49,6 +48,7 @@ public class Movie {
     @ElementCollection
     private List<MovieState> movieState =  new ArrayList<>();
 
+
     @ManyToOne
     private Director director;
 
@@ -56,6 +56,7 @@ public class Movie {
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Rating> ratings = new ArrayList<>();
+
 
     @ManyToMany
     private List<Watchlist> watchlist =  new ArrayList<>();
