@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@RestController("/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
@@ -30,7 +30,7 @@ public class AuthenticationController {
 
     }
 
-    @PostMapping("/signup")
+    @PostMapping
     public ResponseEntity<String> signUp(@RequestBody User user){
         try{
             authenticationService.signup(user);
