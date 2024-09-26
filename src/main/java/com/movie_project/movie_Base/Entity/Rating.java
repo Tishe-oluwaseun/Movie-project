@@ -26,6 +26,6 @@ public class Rating {
     @JoinColumn(name = "movie_id")
     private Movie movie;
 
-    private double rating;
+    private double ratingValue;
 
 }
