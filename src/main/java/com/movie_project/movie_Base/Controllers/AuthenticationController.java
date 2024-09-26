@@ -29,6 +29,18 @@ public class AuthenticationController {
                }
 
     }
+
+    @PostMapping("/signup")
+    public ResponseEntity<String> signUp(@RequestBody User user){
+        try{
+            authenticationService.signup(user);
+            return ResponseEntity.ok("Signup Successful");
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("SignUp Failed");
+        }
+    }
+
+
     public ResponseEntity<String> logout(HttpSession session) {
         session.invalidate();
         return ResponseEntity.ok("Logout Successful");

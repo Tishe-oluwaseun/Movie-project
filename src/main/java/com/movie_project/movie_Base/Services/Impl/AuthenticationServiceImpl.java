@@ -32,6 +32,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
     }
 
+    @Override
+    public void signup(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+    }
+
     public String hashPassword(String password) {
         return passwordEncoder.encode(password);
     }
