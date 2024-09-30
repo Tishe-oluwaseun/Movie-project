@@ -31,7 +31,7 @@ export class SignUpComponent implements OnInit {
   signUp() {
     const { user, email, password } = this.signupForm.value;
     this.errorMessage = '';
-  
+    
     this.authService.signUp(user, email, password).subscribe({
       next: (response) => {
         console.log('Signup successful', response);
