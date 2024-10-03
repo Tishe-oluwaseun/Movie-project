@@ -19,7 +19,7 @@ public class Bootstrap implements CommandLineRunner {
         System.out.println("Bootstrap started");
         User user = new User();
         user.setUsername("admin");
-        user.setPassword("password");
+        user.setPassword("password12342");
         user.setEmail("admin@email.com");
         user.setBadge(Badge.DIAMOND);
         user.setIsPro(true);
