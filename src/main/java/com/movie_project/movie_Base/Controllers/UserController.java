@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 @AllArgsConstructor
 @Slf4j
 @RestController("/user")
@@ -32,16 +32,16 @@ public class UserController {
     public ResponseEntity getAllStaff(){
         return ResponseEntity.ok(userServiceImpl.findAllUsersByRole(Role.STAFF));
     }
-//    @GetMapping("/{id}")
-//    public ResponseEntity getUserById( @PathVariable Long id){
-//        return ResponseEntity.ok(userService.getUserById(id));
-//    }
-    @GetMapping("/user")
+
+
+    @GetMapping("/All")
     public ResponseEntity getAllUsers(){
+
         return ResponseEntity.ok(userServiceImpl.findAllUsersByRole(Role.USER));
     }
     @GetMapping("/admin")
     public ResponseEntity getAllAdmins(){
+
         return ResponseEntity.ok(userServiceImpl.findAllUsersByRole(Role.ADMIN));
     }
 
@@ -53,13 +53,9 @@ public class UserController {
 
     @DeleteMapping("/delete")
     public ResponseEntity deleteUser(@RequestParam Long id){
-        System.out.println("user deleted");
         userService.deleteUser(id);
+        System.out.println("user deleted");
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    }
-    @PostMapping("/save")
-    public ResponseEntity saveUser(@RequestBody User users){
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveUser(users));
     }
 
     @PutMapping("/update")

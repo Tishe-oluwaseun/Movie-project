@@ -43,7 +43,8 @@ public class UserServiceImpl implements UserService {
             user.setRole(Role.USER);
             saveUser(user);
             return user;
-        } else {return oldUser.get();}
+        } else {
+            return oldUser.get();}
     }
 
     @Override

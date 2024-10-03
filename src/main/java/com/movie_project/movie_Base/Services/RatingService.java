@@ -8,7 +8,7 @@ import java.util.List;
 public interface RatingService {
 
     Rating addRating(Long userId, Long movieId, double rating);
-    RatingRepository deleteRating(Long ratingId);
+    void deleteRating(Long ratingId);
     Rating updateRating(Long userId, Long movieId, double rating);
     Rating getUserRatingOfMovie(Long userId, Long movieId);
     Double getAverageMovieRating(Long movieId);

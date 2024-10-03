@@ -41,11 +41,13 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
-    public RatingRepository deleteRating(Long ratingId) {
-        Rating rating = ratingRepository.getById(ratingId);
-        ratingRepository.delete(rating);
-
-        return ratingRepository;
+    public void deleteRating(Long ratingId) {
+//        Rating rating = ratingRepository.getById(ratingId);
+//        ratingRepository.delete(rating);
+//
+//        return ratingRepository;
+        log.info("deleting movie by id: {}", ratingId);
+        movieRepository.deleteById(ratingId);
     }
 
     @Override

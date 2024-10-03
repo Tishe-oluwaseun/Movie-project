@@ -2,41 +2,41 @@ package com.movie_project.movie_Base.Controllers;
 
 import com.movie_project.movie_Base.Entity.User;
 import com.movie_project.movie_Base.Services.AuthenticationService;
-import com.movie_project.movie_Base.dto.LoginRequest;
+import com.movie_project.movie_Base.auth.AuthenticationResponse;
+import com.movie_project.movie_Base.auth.LoginRequest;
+import com.movie_project.movie_Base.auth.RegisterRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("/auth")
+@RestController("/api/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
+    public ResponseEntity<AuthenticationResponse> login(@RequestBody LoginRequest loginRequest) {
                try {
-                   User user = authenticationService.login(loginRequest.getUsername(), loginRequest.getPassword());
-                   session.setAttribute("user", user);
-                   return ResponseEntity.ok("Login Successful");
+
+                  return ResponseEntity.ok(authenticationService.authenticate(loginRequest));
+
                } catch (Exception e) {
-                   return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login Failed: " + e.getMessage());
+                   AuthenticationResponse loginResponse = new AuthenticationResponse("Login Failed");
+                   return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(loginResponse);
                }
+            }
 
-    }
-
-    @PostMapping
-    public ResponseEntity<String> signUp(@RequestBody User user){
+    @PostMapping("/register")
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request){
         try{
-            authenticationService.signup(user);
-            return ResponseEntity.ok("Signup Successful");
+            return ResponseEntity.ok(authenticationService.register(request));
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("SignUp Failed");
+            AuthenticationResponse response = new AuthenticationResponse("SignUp Failed");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
     }
 

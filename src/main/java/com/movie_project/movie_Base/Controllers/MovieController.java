@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController("/movie")
-@CrossOrigin(origins = "http://localhost:50029")
 @RequiredArgsConstructor
 @Slf4j
 public class MovieController {
@@ -61,10 +60,6 @@ public class MovieController {
         return new ResponseEntity<>(movieService.updateMovie(movieDTO), HttpStatus.OK);
 
     }
-
-
-
-
 
     @DeleteMapping("/{id}")
     public void deleteMovie(@PathVariable Long id) {
