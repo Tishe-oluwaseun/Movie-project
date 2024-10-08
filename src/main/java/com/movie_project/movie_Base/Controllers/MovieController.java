@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("/movie")
+@RestController
 @RequiredArgsConstructor
 @Slf4j
+@RequestMapping("/movie")
 public class MovieController {
     private final MovieService movieService;
     private  ModelMapper modelMapper;

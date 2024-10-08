@@ -26,7 +26,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth**")
+                        .requestMatchers("/api/auth/**","/h2-console/**")//authorize URLs and their http requests to be granted access to the API
                         .permitAll()
                         .anyRequest()
                         .authenticated()
@@ -38,6 +38,8 @@ public class SecurityConfig {
                 .httpBasic(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable);
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        http.csrf().disable();
+        http.headers().frameOptions().disable();
 
         return http.build();
     }

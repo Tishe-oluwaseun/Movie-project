@@ -37,7 +37,7 @@ import java.util.Set;
     @OneToOne
     private Watchlist watchlist;
 
-    private boolean isActiveUser = true;
+    private boolean isActiveUser ;
 
     @OneToMany(mappedBy = "user")
     private Set<Comment> comment = new HashSet<>();
