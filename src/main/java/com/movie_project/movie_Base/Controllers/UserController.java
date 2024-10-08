@@ -29,10 +29,7 @@ public class UserController {
     public ResponseEntity getAllUser(User user) {
         return ResponseEntity.ok(userService.getUserByEmail(user.getEmail()));
     }
-    @GetMapping("/staff")
-    public ResponseEntity getAllStaff(){
-        return ResponseEntity.ok(userServiceImpl.findAllUsersByRole(Role.STAFF));
-    }
+
 
 
     @GetMapping("/All")
