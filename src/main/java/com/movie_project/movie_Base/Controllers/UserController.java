@@ -25,19 +25,20 @@ public class UserController {
     private final UserServiceImpl userServiceImpl;
 
 
-    @GetMapping("/allusers")
-    public ResponseEntity getAllUser(User user) {
+    @GetMapping("/All")
+    public ResponseEntity getAllUserByEmail(User user) {
+        log.info("getAllUserByEmail");
         return ResponseEntity.ok(userService.getUserByEmail(user.getEmail()));
     }
 
 
 
-    @GetMapping("/All")
-    public ResponseEntity getAllUsers(){
+    @GetMapping("/ByRole")
+    public ResponseEntity getAllUsersByRole(){
 
         return ResponseEntity.ok(userServiceImpl.findAllUsersByRole(Role.USER));
     }
-    @GetMapping("/admin")
+    @GetMapping("/Admin")
     public ResponseEntity getAllAdmins(){
 
         return ResponseEntity.ok(userServiceImpl.findAllUsersByRole(Role.ADMIN));
