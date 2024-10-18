@@ -5,5 +5,6 @@ import com.movie_project.movie_Base.Entity.Movie;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DirectorRepository extends JpaRepository<Director, Long> {
+    Director findByDirectorName(String name);
 
 }

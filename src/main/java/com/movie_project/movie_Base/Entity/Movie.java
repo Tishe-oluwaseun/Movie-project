@@ -18,7 +18,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class Movie {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @EqualsAndHashCode.Include
     private Long Id;
     private String title;

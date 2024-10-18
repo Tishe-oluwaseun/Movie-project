@@ -1,6 +1,7 @@
 package com.movie_project.movie_Base.Services.Impl;
 
 import com.movie_project.movie_Base.DTOs.MovieDTO;
+import com.movie_project.movie_Base.Entity.Director;
 import com.movie_project.movie_Base.Entity.Movie;
 import com.movie_project.movie_Base.Repositories.DirectorRepository;
 import com.movie_project.movie_Base.Repositories.MovieRepository;
@@ -35,15 +36,22 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public MovieDTO addMovie(Movie movie) {
         List<Movie> existingMovie = movieRepository.findByTitle(movie.getTitle());
-        if (existingMovie != null) {
+        if (!existingMovie.isEmpty()) {
             log.info("Movie already exists: {}", movie.getTitle());
             return modelMapper.map(existingMovie.getFirst(), MovieDTO.class);
-        } else {
+        }
+        else
+        {
             if (movie.getDirector() != null) {
-                directorRepository.findById(movie.getDirector().getId()).ifPresent(movie::setDirector);
+               if (directorRepository.findByDirectorName(movie.getDirector().getDirectorName()) == null){
+                   directorRepository.save(movie.getDirector());
+               }
+
             }
+
             Movie savedMovie = movieRepository.save(movie);
             return modelMapper.map(savedMovie, MovieDTO.class);
+
         }
     }
 
@@ -51,6 +59,11 @@ public class MovieServiceImpl implements MovieService {
     public Movie saveMovie(Movie movie) {
         log.info("saving movie: {}", movie);
         return movieRepository.save(movie);
+    }
+    @Override
+    public Director saveDirector(Director director) {
+        log.info("saving director: {}", director);
+        return directorRepository.save(director);
     }
 
     @Override

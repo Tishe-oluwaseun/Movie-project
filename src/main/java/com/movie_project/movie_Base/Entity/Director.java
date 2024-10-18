@@ -14,7 +14,7 @@ import java.util.Set;
 @Table(name = "directors")
 public class Director {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @EqualsAndHashCode.Include
     private Long id;
 
@@ -25,7 +25,7 @@ public class Director {
     @OneToMany(mappedBy = "director")
     private Set<Movie> movie = new HashSet<>();
 
-    private String DPFP;
+    private String directorPicture;
 
 
 }
