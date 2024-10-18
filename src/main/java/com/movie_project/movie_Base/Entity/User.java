@@ -2,6 +2,7 @@ package com.movie_project.movie_Base.Entity;
 
 import com.movie_project.movie_Base.Enum.Badge;
 import com.movie_project.movie_Base.Enum.Role;
+import com.movie_project.movie_Base.Payments.PricingPlanType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -29,7 +30,7 @@ import java.util.Set;
     private String password;
     private String email;
 
-    private Boolean isPro;
+
 
     @Enumerated(EnumType.STRING)
     private Badge badge;
@@ -52,6 +53,9 @@ import java.util.Set;
     private Role role;
 
     private String Picture;
+
+    @Enumerated(EnumType.STRING)
+    private PricingPlanType pricingPlan;
 
 
 

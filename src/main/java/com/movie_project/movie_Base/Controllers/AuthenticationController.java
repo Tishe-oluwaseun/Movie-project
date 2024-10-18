@@ -1,5 +1,8 @@
 package com.movie_project.movie_Base.Controllers;
 
+
+
+
 import com.movie_project.movie_Base.Entity.User;
 import com.movie_project.movie_Base.Services.AuthenticationService;
 import com.movie_project.movie_Base.auth.AuthenticationResponse;
@@ -18,9 +21,12 @@ import org.springframework.web.bind.annotation.*;
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
+
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody LoginRequest loginRequest) {
                try {
+
+                    User.builder().isActiveUser(true);
 
                   return ResponseEntity.ok(authenticationService.authenticate(loginRequest));
 
