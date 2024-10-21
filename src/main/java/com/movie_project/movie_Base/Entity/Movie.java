@@ -1,6 +1,9 @@
 package com.movie_project.movie_Base.Entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.movie_project.movie_Base.Enum.GENRE;
 import com.movie_project.movie_Base.Enum.MovieState;
 import jakarta.persistence.*;
@@ -15,6 +18,7 @@ import java.util.Set;
 @Getter
 @Setter
 @AllArgsConstructor
+@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 @NoArgsConstructor
 public class Movie {
     @Id
@@ -49,7 +53,8 @@ public class Movie {
     private List<MovieState> movieState =  new ArrayList<>();
 
 
-    @ManyToOne
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.ALL)
     private Director director;
 
 

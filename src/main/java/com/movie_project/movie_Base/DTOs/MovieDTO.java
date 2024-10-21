@@ -1,10 +1,8 @@
 package com.movie_project.movie_Base.DTOs;
 
-import com.movie_project.movie_Base.Entity.Comment;
 import com.movie_project.movie_Base.Entity.Director;
 import com.movie_project.movie_Base.Enum.GENRE;
 import com.movie_project.movie_Base.Enum.MovieState;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,5 +26,5 @@ public class MovieDTO {
     private String videoUrl;
     private String movieImages;
     private List<MovieState> movieState =  new ArrayList<>();
-    private Director director;
+    private DirectorDTO director;
 }

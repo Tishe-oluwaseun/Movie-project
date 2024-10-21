@@ -1,5 +1,7 @@
 package com.movie_project.movie_Base.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.movie_project.movie_Base.Enum.Badge;
 import com.movie_project.movie_Base.Enum.Role;
 import com.movie_project.movie_Base.Payments.PricingPlanType;
@@ -19,6 +21,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 @Table(name = "_user")
     public class User implements UserDetails {
     @Id

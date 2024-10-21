@@ -20,7 +20,7 @@ import java.util.List;
 @RequestMapping("/movie")
 public class MovieController {
     private final MovieService movieService;
-    private  ModelMapper modelMapper;
+    private final ModelMapper modelMapper = new ModelMapper();
 
 
 
@@ -57,7 +57,7 @@ public class MovieController {
     public ResponseEntity<Movie> updateMovie(@PathVariable Long id,@RequestBody MovieDTO movieDTO) {
         Movie movieToUpdate = movieService.getMovieById(id);
         if (movieToUpdate == null) {
-            return null;
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(movieService.updateMovie(movieDTO), HttpStatus.OK);
 

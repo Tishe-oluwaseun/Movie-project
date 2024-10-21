@@ -77,7 +77,7 @@ public class MovieServiceImpl implements MovieService {
             existingMovie.setTitle(movie.getTitle());
             existingMovie.setReleaseDate(movie.getReleaseDate());
             existingMovie.setGenre(movie.getGenre());
-            existingMovie.setDirector(movie.getDirector());
+//            existingMovie.setDirector(movie.getDirector());
             existingMovie.setDescription(movie.getDescription());
             return saveMovie(existingMovie);
         }
@@ -95,7 +95,10 @@ public class MovieServiceImpl implements MovieService {
     public Movie getMovieByName(String title) {
         List<Movie> movies = movieRepository.findByTitle(title);
         if (movies.isEmpty()) {
+
+            log.info("Movie does not exist: {}", title);
             return null;
+
         }
         return movies.getFirst();
     }
