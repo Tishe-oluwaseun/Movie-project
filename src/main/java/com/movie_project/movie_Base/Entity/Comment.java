@@ -2,6 +2,7 @@ package com.movie_project.movie_Base.Entity;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.util.Date;
@@ -18,6 +19,7 @@ public class Comment {
     @EqualsAndHashCode.Include
     private Long id;
 
+    @NotBlank(message = "comment cannot be empty")
     private String comment;
 
     @ManyToOne

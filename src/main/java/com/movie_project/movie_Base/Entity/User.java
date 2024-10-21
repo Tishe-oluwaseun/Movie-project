@@ -6,10 +6,14 @@ import com.movie_project.movie_Base.Enum.Badge;
 import com.movie_project.movie_Base.Enum.Role;
 import com.movie_project.movie_Base.Payments.PricingPlanType;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -21,6 +25,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Validated
 @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 @Table(name = "_user")
     public class User implements UserDetails {
@@ -29,8 +34,19 @@ import java.util.Set;
     @EqualsAndHashCode.Include
     private Long id;
 
+    @Size(min = 5, message = "username is too short")
+    @Size(max = 32, message = "username is too long")
+    @NotBlank(message = "Username is mandatory")
     private String username;
+
+    @Size(min = 5, message = "password is too short")
+    @Size(max = 32, message = "password is too long")
     private String password;
+
+    @NotBlank(message = "Email is necessary")
+    @Email(message = "email must contain '@example.com' ")
+    @Size(min = 5, message = "email is too short")
+    @Size(max = 32, message = "email is too long")
     private String email;
 
 
