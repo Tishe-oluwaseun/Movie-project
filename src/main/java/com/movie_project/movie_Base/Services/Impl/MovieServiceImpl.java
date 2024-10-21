@@ -71,7 +71,7 @@ public class MovieServiceImpl implements MovieService {
         log.info("updating movie: {}", movie);
         Movie existingMovie = movieRepository.findById(movie.getId()).orElse(null);
         if (existingMovie == null) {
-            log.info("Movie not found: {}", movie.getId());
+            log.info("No results found try others Keywords: {}", movie.getId());
             return null;
         }
             existingMovie.setTitle(movie.getTitle());
