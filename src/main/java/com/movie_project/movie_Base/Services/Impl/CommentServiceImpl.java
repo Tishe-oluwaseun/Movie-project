@@ -28,13 +28,13 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Comment getComments(Long movieId) {
+    public Comment getMovieComments(Long movieId) {
         log.info("getting comments for movie: {}", movieId);
         return commentRepository.findById(movieId).orElseThrow();
     }
 
     @Override
-    public Comment getComment(Long commentId) {
+    public Comment getCommentById(Long commentId) {
         log.info("getting comment with id: {}", commentId);
         return commentRepository.findById(commentId).orElseThrow();
     }

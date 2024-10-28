@@ -26,7 +26,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**","/h2-console/**")//authorize URLs and their http requests to be granted access to the API
+                        .requestMatchers("/api/auth/**","/h2-console/**","/api/transaction/**")//authorize URLs and their http requests to be granted access to the API
                         .permitAll()
                         .anyRequest()
                         .authenticated()

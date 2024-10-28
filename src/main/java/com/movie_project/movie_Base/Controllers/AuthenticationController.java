@@ -26,12 +26,13 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponse> login(@RequestBody LoginRequest loginRequest) {
                try {
 
-                    User.builder().isActiveUser(true);
+                    User
+                     .builder().isActiveUser(true);
 
                   return ResponseEntity.ok(authenticationService.authenticate(loginRequest));
 
                } catch (Exception e) {
-                   AuthenticationResponse loginResponse = new AuthenticationResponse("Login Failed");
+                   AuthenticationResponse loginResponse = new AuthenticationResponse("Login Failed check Bad credentials Email or Password");
                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(loginResponse);
                }
             }

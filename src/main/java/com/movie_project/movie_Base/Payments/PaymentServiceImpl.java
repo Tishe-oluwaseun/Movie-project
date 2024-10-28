@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.io.BufferedReader;
@@ -29,7 +28,6 @@ import java.util.Date;
 public class PaymentServiceImpl implements PaymentService{
 
     private final UserRepository userRepository;
-    private RestTemplate restTemplate;
     private WebClient webClient;
 
     public static final Integer STATUS_CODE_OK = 200;
@@ -46,11 +44,12 @@ public class PaymentServiceImpl implements PaymentService{
 
     @Override
     public PaymentResponse initializeTransaction(PaymentRequest paymentRequest) {
-        PaymentResponse paymentResponse = null;
+        PaymentResponse paymentResponse = null ;
         try{
 
             Gson gson = new Gson();
-            StringEntity request = new StringEntity(gson.toJson(paymentRequest), "application/json");
+
+            StringEntity request = new StringEntity(gson.toJson(paymentRequest));
 
 
             HttpHeaders headers =new HttpHeaders();
@@ -91,7 +90,9 @@ public class PaymentServiceImpl implements PaymentService{
     @Override
     public VerifyTransactionResponse verifyTransaction(String reference,Long id,String plan) throws Exception {
         VerifyTransactionResponse transactionVerificationResponse= null;
-        PaymentPaystack paymentPaystack = null;
+//        PaymentPaystack paymentPaystack = null;
+
+        ObjectMapper mapper1 = new ObjectMapper();
         try {
             HttpClient client = HttpClientBuilder.create().build();
             HttpGet request = new HttpGet(PAYSTACK_VERIFY + reference);
@@ -110,7 +111,7 @@ public class PaymentServiceImpl implements PaymentService{
             } else {
                 throw new Exception("Error while connecting to paystack url");
             }
-            transactionVerificationResponse = mapper.readValue(result.toString(), VerifyTransactionResponse.class);
+            transactionVerificationResponse = mapper1.readValue(result.toString(), VerifyTransactionResponse.class);
 
 
             if (transactionVerificationResponse == null) {
@@ -140,7 +141,6 @@ public class PaymentServiceImpl implements PaymentService{
                 }
 
         } catch (Exception ex) {
-            ex.printStackTrace();
             throw new Exception("Internal server error");
         }
         return transactionVerificationResponse;
